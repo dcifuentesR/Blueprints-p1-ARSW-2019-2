@@ -83,14 +83,15 @@ public class InMemoryPersistenceTest {
         Blueprint bp2= new Blueprint("amy", "thepaint", pts);
         ibpp.saveBlueprint(bp2);
         
+
+        Blueprint bp3= new Blueprint("amy", "amy's blueprint", pts);
+        ibpp.saveBlueprint(bp3);
+        
         assertEquals("getBlueprint doesn't get accurate blueprint if the name is the same as another", bp, ibpp.getBlueprint("john", "thepaint"));
         
-        try{
-            ibpp.getBlueprint("arthur", "thepaint");
-            fail("an exception was expected because the author doesn´t exist");
-        } catch(BlueprintNotFoundException e){
-            
-        }
+        assertNull("expected getBlueprint to return null because the author doesn't exist", ibpp.getBlueprint("arthur", "thepaint"));
+        assertNull("expected getBlueprint to return null because the blueprint doesn't exist", ibpp.getBlueprint("john", "this doesn't exist"));
+        assertNull("expected getBlueprint to return null because the provided author did not make this blueprint", ibpp.getBlueprint("john", "amy's blueprint"));
     }
     
     @Test
@@ -122,6 +123,13 @@ public class InMemoryPersistenceTest {
         Blueprint bp6= new Blueprint("amy", "thepaint3", pts);
         ibpp.saveBlueprint(bp6);
         bprints.add(bp6);
+        
+        try {
+        	ibpp.getBlueprintsByAuthor("arthur");
+        	fail("An exception was expected because the given author doesnt exist");
+        }catch (BlueprintNotFoundException e) {
+			// TODO: handle exception
+		}
         
         for(Blueprint b:ibpp.getBlueprintsByAuthor("john"))
             assertEquals("every author should have the same name",b.getAuthor(), "john");
