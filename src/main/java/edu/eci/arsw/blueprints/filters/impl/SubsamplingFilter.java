@@ -1,5 +1,6 @@
 package edu.eci.arsw.blueprints.filters.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import edu.eci.arsw.blueprints.filters.BlueprintFilter;
@@ -10,9 +11,10 @@ public class SubsamplingFilter implements BlueprintFilter {
 
 	@Override
 	public Blueprint filter(Blueprint bp) {
-		return bp;
-		
-
+		List<Point> points=new LinkedList<Point>(bp.getPoints());
+		for(int i=0;i<points.size();i++)//lol--- i can't belive this worked--- 
+			points.remove(i);
+		return new Blueprint(bp.getAuthor(), bp.getName(), points.toArray(new Point[0]));
 	}
 
 }
