@@ -5,9 +5,11 @@
  */
 package edu.eci.arsw.blueprints.services;
 
+import edu.eci.arsw.blueprints.filters.BlueprintFilter;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,13 +27,20 @@ public class BlueprintsServices {
     @Autowired
     BlueprintsPersistence bpp=null;
     
+    @Autowired
+    BlueprintFilter bpf=null;
     
-    public void addNewBlueprint(Blueprint bp){
-        
+    
+    public Blueprint filterBlueprint(Blueprint bp) {
+    	return bpf.filter(bp);
     }
     
-    public Set<Blueprint> getAllBlueprints(){
-        return null;
+    public void saveBlueprint(String author,String name) throws BlueprintPersistenceException {
+    	bpp.saveBlueprint(new Blueprint(author,name));
+    }
+    
+    public void addPoint(Blueprint bp, int x,int y) {
+    	bp.addPoint(new Point(x,y));
     }
     
     /**

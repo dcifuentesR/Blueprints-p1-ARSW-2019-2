@@ -11,7 +11,7 @@ public class App {
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 		BlueprintsServices bs = ac.getBean(BlueprintsServices.class);
 		
-
+		
 	}
 
 }

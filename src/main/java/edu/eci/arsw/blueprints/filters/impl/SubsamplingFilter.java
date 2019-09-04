@@ -3,10 +3,13 @@ package edu.eci.arsw.blueprints.filters.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import edu.eci.arsw.blueprints.filters.BlueprintFilter;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 
+@Component("bpf")
 public class SubsamplingFilter implements BlueprintFilter {
 
 	@Override
